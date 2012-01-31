@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import re
+
+def instruction(scanner, token): return "INSTRUCTION", token
+def operator(scanner, token):    return "OPERATOR", token
+def operand(scanner, token):     return "OPERAND", token.rstrip(',')
+def digit(scanner, token):       return "DIGIT", token
+def end_stmnt(scanner, token):   return "END_STATEMENT"
+def comment(scanner, token):     return "COMMENT", token
+
+scanner = re.Scanner([
+    (r"//.*", comment),
+    (r"[A-Z]+", instruction),
+    (r"[a-zA-Z0-9]+,?", operand),
+    (r"[0-9]+(\.[0-9]+)?", digit),
+    (r"\n", end_stmnt),
+    (r"\s+", None),
+    ])
+
+file = open("examplecode.txt")
+tokens, remainder = scanner.scan(file.read())
+for token in tokens:
+    print(token)

@@ -1,0 +1,4 @@
+// comment
+MOV bx, cx
+JMP 22
+ADD 2, 4
